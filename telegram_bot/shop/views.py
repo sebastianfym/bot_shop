@@ -13,9 +13,8 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
 from yookassa import Configuration, Payment
 
-# from config import BASE_URL
 from .models import Category, ProductSubcategory, Product, ShoppingCart, FAQ, FAQAnswer, AdditionalQuestion, \
-    AdditionalAnswer, Channel  # Catalog,
+    AdditionalAnswer, Channel  
 from .serializers import CategorySerializer, ShoppingCartSerializer, ProductSerializer, FAQSerializer, \
     FAQAnswerSerializer, AdditionalQuestionSerializer, AdditionalAnswerSerializer
 from accounts.models import User
@@ -79,7 +78,6 @@ class ShopViewSet(GenericViewSet):
             products=goods,
             quantity=quantity_goods
         )
-        # shopping_cart.save()
         return Response({"data": "Товар добавлен в корзину."}, status=status.HTTP_200_OK)
 
     @transaction.atomic
