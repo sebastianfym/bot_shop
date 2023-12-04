@@ -35,9 +35,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, verbose_name="id")
     username = models.CharField(max_length=150, unique=True, blank=True, verbose_name="имя пользователя")
     name = models.CharField(max_length=150, default="", verbose_name="имя")
-    phone = models.CharField(max_length=40, blank=True, null=True, verbose_name="номер телефона")
+    # phone = models.CharField(max_length=40, blank=True, null=True, verbose_name="номер телефона")
     # password = models.CharField(max_length=128, blank=True, default="", verbose_name="пароль")
-    telegram_id = models.CharField(max_length=250, verbose_name="телеграм id")
+    telegram_id = models.IntegerField(verbose_name="телеграм id")
     payment_verification = models.BooleanField(default=False, verbose_name="подтверждение оплаты")
 
     is_employee = models.BooleanField(default=False, verbose_name="работник")
@@ -74,7 +74,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
-        unique_together = ["phone"]
+        # unique_together = ["phone"]
 
     def save(self, *args, **kwargs):
         if not self.username:

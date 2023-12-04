@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  db:
+    restart: always
+    container_name: db_bot_shop
+    ports:
+      - "5432:5432"
+    image: postgres:16beta2
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+  web:
+    build: .
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DEBUG: 'True'
+      DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+  telegram_bot:
+    build: ./bot
+    command: python bot.py
+    volumes:
+      - ./bot:/app
+    depends_on:
+      - db
