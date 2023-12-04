@@ -99,10 +99,6 @@ async def send_photo(message, goods, basket_id):
     try:
         image_from_url = URLInputFile(f"{BASE_URL + goods['image_url']}")
         builder.row(types.InlineKeyboardButton(text=f"Добавить в корзину", callback_data=f"goods_{goods['id']}"))
-        # await message.answer_photo(image_from_url,
-        #                            caption=f"Название: {goods['name']}\nЦена: {goods['price']}\nОписание: {goods['description']}",
-        #                            reply_markup=builder.as_markup()
-        #                            )
     except:
         image_from_url = URLInputFile(f"{BASE_URL + goods['image']}")
         builder.row(types.InlineKeyboardButton(text=f"Удалить из корзины", callback_data=f"del_goods_{basket_id}"))
@@ -273,7 +269,7 @@ async def inline_pagination_buttons(callback_data, position, response, callback,
             if position == 0 or position == -5:
                 for btn in response["data"][:5]:
                     builder.row(types.InlineKeyboardButton(text=f"{btn}", callback_data=f"{category}_{btn}_{5}"))
-                # builder.row(types.InlineKeyboardButton(text=f"➡️", callback_data=f"{category}_next_{5}"))
+                
                 builder.row(
                     types.InlineKeyboardButton(text=f"➡️", callback_data=f"{category}_next_{5}_{category_name}"))
             else:
